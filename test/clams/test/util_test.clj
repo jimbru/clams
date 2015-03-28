@@ -32,3 +32,15 @@
   (let [publics (ns-publics this-ns)]
     (is (contains? publics 'm1))
     (is (= (:macro (meta (get publics 'm1))) true))))
+
+(deftest test-str->int
+  (testing "str->int"
+    (is (= (str->int "0") 0))
+    (is (= (str->int "1") 1))
+    (is (= (str->int "-1") -1))
+    (is (= (str->int "123") 123))
+    (is (= (str->int 123) 123))
+    (is (= (str->int -1) -1))
+    (is (= (str->int "2147483647") 2147483647))
+    (is (= (str->int "2147483648") 2147483648))
+    (is (nil? (str->int nil)))))

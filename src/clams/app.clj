@@ -1,6 +1,7 @@
 (ns clams.app
   (:require [clams.conf :as conf]
             [clams.route :refer [compile-routes]]
+            [clams.util :refer [str->int]]
             [org.httpkit.server :as httpkit]
             ring.middleware.http-response
             ring.middleware.json
@@ -47,7 +48,7 @@
     (when (nil? @server)
       (conf/load!)
       (let [middleware (:middleware opts)
-            port       (conf/get :port)]
+            port       (str->int (conf/get :port))]
         (reset! server (httpkit/run-server (app app-ns middleware) {:port port}))))))
 
 (defn stop-server

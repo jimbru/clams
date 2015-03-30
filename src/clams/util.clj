@@ -20,3 +20,11 @@
     (list 'defmacro m
       '[& args]
       `(concat (list (quote ~(fully-qualified-symbol ns m))) ~(quote args))))))
+
+(defn str->int
+  "Convert a string to an integral number."
+  [s]
+  (when s
+    (if (number? s)
+        s
+        (Long/parseLong s))))

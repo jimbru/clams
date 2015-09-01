@@ -81,13 +81,25 @@
         {:database (:db (mg/connect-via-uri url))
          :migrations ms}))))
 
+;; Convert a Heroku jdbc URL
+(defn- format-jdbc-url
+  "If it's a Heroku postgres URL, we tweak it to be a format that
+   ragtime accepts.  Otherwise we leave it alone."
+  [url]
+  (let [u (clojure.string/replace url
+                                  #"^postgres\w*://([^:]+):([^:]+)@(.*)"
+                                  "jdbc:postgresql://$3?user=$1&password=$2")]
+    (if (re-find #"[?]" u)
+        u
+        (str u "?_ignore=_ignore"))))
+
 (defn- sql-config []
   "The config only exists if the database exists and there are
    relevant migrations."
   (when-let [url (conf/get :database-url)]
     (let [ms (remove :scheme (jdbc/load-resources "migrations"))] ; No scheme means jdbc
       (when (seq ms)
-        {:database (jdbc/sql-database {:connection-uri url})
+        {:database (jdbc/sql-database {:connection-uri (format-jdbc-url url)})
          :migrations ms}))))
 
 (defn- run-migrations

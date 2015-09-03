@@ -45,13 +45,15 @@
 
 (defn start-server
   ([app-ns]
-    (start-server app-ns {}))
+   (start-server app-ns {}))
   ([app-ns opts]
+   (start-server app-ns opts httpkit/run-server))
+  ([app-ns opts run-server]
     (when (nil? @server)
       (conf/load!)
       (let [middleware (:middleware opts)
             port       (str->int (conf/get :port))]
-        (reset! server (httpkit/run-server (app app-ns middleware) {:port port}))))))
+        (reset! server (run-server (app app-ns middleware) {:port port}))))))
 
 (defn stop-server
   []

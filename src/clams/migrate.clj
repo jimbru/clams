@@ -71,12 +71,15 @@
 ;;; Run migrations
 ;;;
 
+(defn- load-resources []
+  (sort-by :id (jdbc/load-resources "migrations"))  )
+
 (defn- mongo-config
   "The config only exists if the database exists and there are
    relevant migrations."
   []
   (when-let [url (conf/get :mongo-url)]
-    (let [ms (filter #(= :mongo (:scheme %)) (jdbc/load-resources "migrations"))]
+    (let [ms (filter #(= :mongo (:scheme %)) (load-resources))]
       (when (seq ms)
         {:database (:db (mg/connect-via-uri url))
          :migrations ms}))))
@@ -97,10 +100,10 @@
   "The config only exists if the database exists and there are
    relevant migrations."
   (when-let [url (conf/get :database-url)]
-    (let [ms (remove :scheme (jdbc/load-resources "migrations"))] ; No scheme means jdbc
+    (let [ms (remove :scheme (load-resources))] ; No scheme means jdbc
       (when (seq ms)
         {:database (jdbc/sql-database {:connection-uri (format-jdbc-url url)})
-         :migrations ms}))))
+         :migrations (sort-by :id ms)}))))
 
 (defn- run-migrations
   ([f] (run-migrations f nil))

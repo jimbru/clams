@@ -2,6 +2,7 @@
   (:require [clams.conf :as conf]
             [clams.route :refer [compile-routes]]
             [clams.util :refer [str->int]]
+            [clojure.tools.logging :as log]
             [org.httpkit.server :as httpkit]
             ring.middleware.http-response
             ring.middleware.json
@@ -51,6 +52,9 @@
   ([app-ns opts run-server]
     (when (nil? @server)
       (conf/load!)
+      (when (conf/get :clams-debug)
+        (log/info "CLAMS_ENV=" (conf/get :clams-env))
+        (log/info "CLAMS_DEBUG mode is on!"))
       (let [middleware (:middleware opts)
             port       (str->int (conf/get :port))]
         (reset! server (run-server (app app-ns middleware) {:port port}))))))

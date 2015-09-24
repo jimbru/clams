@@ -1,3 +1,4 @@
 {
-  :port 5000
+  :clams-debug false
+  :port        5000
 }

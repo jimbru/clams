@@ -1,4 +1,4 @@
-(defproject clams "0.2.3"
+(defproject clams "0.2.4-SNAPSHOT"
   :description "Clojure with Clams. A framework for web apps."
   :url "https://github.com/standardtreasury/clams"
   :license {:name "The MIT License"
@@ -11,6 +11,7 @@
      [http-kit "2.1.19"]
      [metosin/ring-http-response "0.5.2"]
      [org.clojure/clojure "1.6.0"]
+     [org.clojure/tools.logging "0.3.1"]
      [org.clojure/tools.macro "0.1.5"]
      [org.postgresql/postgresql "9.3-1102-jdbc41"]
      [prismatic/schema "0.3.1"]

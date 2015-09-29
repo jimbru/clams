@@ -15,8 +15,8 @@
      [org.postgresql/postgresql "9.3-1102-jdbc41"]
      [prismatic/schema "0.3.1"]
      [ragtime "0.4.1"]
-     [ring "1.3.1"]
+     [ring "1.4.0"]
      [ring-mock "0.1.5"]
-     [ring/ring-json "0.3.1"]
+     [ring/ring-json "0.4.0"]
      ]
     :aot [clams.migrate])

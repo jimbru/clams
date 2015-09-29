@@ -2,6 +2,7 @@
   (:require [clams.conf :as conf]
             [clams.route :refer [compile-routes]]
             [clams.util :refer [str->int]]
+            [clojure.tools.logging :as log]
             [org.httpkit.server :as httpkit]
             ring.middleware.http-response
             ring.middleware.json
@@ -19,7 +20,7 @@
 ;; In case that in turn wasn't clear, it means that wrap-params happens first,
 ;; then the result of that is passed to wrap-nested-params.
 (defonce default-middleware
-  [ring.middleware.http-response/catch-response
+  [ring.middleware.http-response/wrap-http-response
    ring.middleware.keyword-params/wrap-keyword-params
    ring.middleware.json/wrap-json-params
    ring.middleware.json/wrap-json-response
@@ -51,6 +52,7 @@
   ([app-ns opts run-server]
     (when (nil? @server)
       (conf/load!)
+      (log/debug "CLAMS_ENV =" (conf/get :clams-env))
       (let [middleware (:middleware opts)
             port       (str->int (conf/get :port))]
         (reset! server (run-server (app app-ns middleware) {:port port}))))))

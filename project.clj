@@ -1,4 +1,4 @@
-(defproject clams "0.2.4-SNAPSHOT"
+(defproject clams "0.2.4"
   :description "Clojure with Clams. A framework for web apps."
   :url "https://github.com/standardtreasury/clams"
   :license {:name "The MIT License"

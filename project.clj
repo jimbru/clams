@@ -5,9 +5,9 @@
             :url "http://opensource.org/licenses/MIT"}
   :dependencies
     [
-     [clout "2.0.0"]
+     [clout "2.1.2"]
      [com.novemberain/monger "3.0.0-rc2"]
-     [compojure "1.2.0"]
+     [compojure "1.4.0"]
      [http-kit "2.1.19"]
      [metosin/ring-http-response "0.5.2"]
      [org.clojure/clojure "1.6.0"]

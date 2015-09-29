@@ -9,7 +9,7 @@
      [com.novemberain/monger "3.0.0-rc2"]
      [compojure "1.4.0"]
      [http-kit "2.1.19"]
-     [metosin/ring-http-response "0.5.2"]
+     [metosin/ring-http-response "0.6.5"]
      [org.clojure/clojure "1.6.0"]
      [org.clojure/tools.logging "0.3.1"]
      [org.clojure/tools.macro "0.1.5"]

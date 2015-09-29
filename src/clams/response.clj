@@ -61,7 +61,6 @@
   too-many-requests too-many-requests!
   request-header-fields-too-large request-header-fields-too-large!
   retry-with retry-with!
-  blocked-by-parental-controls blocked-by-parental-controls!
   unavailable-for-legal-reasons unavailable-for-legal-reasons!
 
   ;; 500s

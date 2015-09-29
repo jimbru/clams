@@ -20,7 +20,7 @@
 ;; In case that in turn wasn't clear, it means that wrap-params happens first,
 ;; then the result of that is passed to wrap-nested-params.
 (defonce default-middleware
-  [ring.middleware.http-response/catch-response
+  [ring.middleware.http-response/wrap-http-response
    ring.middleware.keyword-params/wrap-keyword-params
    ring.middleware.json/wrap-json-params
    ring.middleware.json/wrap-json-response

@@ -37,3 +37,16 @@
             :contacts [{:name "David Jarvis"
                         :title "engineer"
                         :tax_id "555"}]}))))
+
+(deftest middleware-keeps-string-params
+  (let [identity-app ((apply comp (reverse app/default-middleware)) identity)
+        sample-nested-json "{\"address\":\"12 Presidio Ave\",\"contacts\":[{\"name\":\"David Jarvis\",\"title\":\"engineer\",\"tax_id\":\"555\"}],\"name\":\"ST\",\"tax_id\":5234234}"
+        response (identity-app {:body (string-input-stream sample-nested-json)
+                                :headers {"content-type" "application/json; charset=UTF-8"}})]
+    (is (= {"address" "12 Presidio Ave"
+            "name" "ST"
+            "tax_id" 5234234
+            "contacts" [{"name" "David Jarvis"
+                         "title" "engineer"
+                         "tax_id" "555"}]}
+           (:string-params response)))))

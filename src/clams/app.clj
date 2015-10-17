@@ -1,12 +1,13 @@
 (ns clams.app
   (:require [clams.conf :as conf]
-            clams.keyword-params
+            clams.middleware.save-params
             [clams.route :refer [compile-routes]]
             [clams.util :refer [str->int]]
             [clojure.tools.logging :as log]
             [org.httpkit.server :as httpkit]
             ring.middleware.http-response
             ring.middleware.json
+            ring.middleware.keyword-params
             ring.middleware.nested-params
             ring.middleware.params))
 
@@ -21,7 +22,8 @@
 ;; then the result of that is passed to wrap-nested-params.
 (defonce default-middleware
   [ring.middleware.http-response/wrap-http-response
-   clams.keyword-params/wrap-keyword-params
+   ring.middleware.keyword-params/wrap-keyword-params
+   clams.middleware.save-params/wrap-save-params
    ring.middleware.json/wrap-json-params
    ring.middleware.json/wrap-json-response
    ring.middleware.nested-params/wrap-nested-params

@@ -1,10 +1,10 @@
-(defproject clams "0.2.6"
+(defproject clams "0.3.0"
   :description "Clojure with Clams. A framework for web apps."
   :url "https://github.com/standardtreasury/clams"
   :license {:name "The MIT License"
             :url "http://opensource.org/licenses/MIT"}
   :dependencies
-    [
+  [
      [clout "2.1.2"]
      [com.novemberain/monger "3.0.0-rc2"]
      [compojure "1.4.0"]

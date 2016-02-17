@@ -28,7 +28,8 @@
    [monger.core :as mg]
    monger.ragtime                       ; Force load of Mongo ragtime/Migratable code
    [ragtime.jdbc :as jdbc]
-   [ragtime.repl :as repl])
+   [ragtime.repl :as repl]
+   ragtime.strategy)
   (:import
    [java.io File])
   (:gen-class))
@@ -103,7 +104,8 @@
     (let [ms (remove :scheme (load-resources))] ; No scheme means jdbc
       (when (seq ms)
         {:database (jdbc/sql-database {:connection-uri (format-jdbc-url url)})
-         :migrations (sort-by :id ms)}))))
+         :migrations (sort-by :id ms)
+         :strategy ragtime.strategy/apply-new}))))
 
 (defn- run-migrations
   ([f] (run-migrations f nil))

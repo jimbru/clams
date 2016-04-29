@@ -98,3 +98,11 @@
           :port         5000
           :foo          "bar"
           :baz          "quux"})))
+
+(deftest set!-test
+  (is (= (conf/get :port) 5000))
+  (is (= (conf/get :color) nil))
+  (conf/set! :color "red")
+  (conf/set! :port 5001)
+  (is (= (conf/get :port) 5001))
+  (is (= (conf/get :color) "red")))

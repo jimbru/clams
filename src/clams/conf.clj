@@ -27,7 +27,7 @@
   Property names are normalized from lower.dot.case to the typical
   lower-dash-case, just like environment variables.
   "
-  (:refer-clojure :rename {get core-get})
+  (:refer-clojure :rename {get core-get set! core-set!})
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]
             [clojure.string :as string]))
@@ -127,4 +127,11 @@
   ([k]
     (get k nil))
   ([k not-found]
-    (core-get (get-all) k not-found)))
+   (core-get (get-all) k not-found)))
+
+(defn set!
+  "Sets the config value for the given key. This is useful when
+   debugging in the repl."
+  [k val]
+  (get-all)                             ; For the side effect
+  (swap! conf assoc k val))

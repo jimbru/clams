@@ -57,7 +57,9 @@
       (log/debug "CLAMS_ENV =" (conf/get :clams-env))
       (let [middleware (:middleware opts)
             port       (str->int (conf/get :port))]
-        (reset! server (run-server (app app-ns middleware) {:port port}))))))
+        (reset! server (run-server (app app-ns middleware)
+                                   {:port port
+                                    :max-body (conf/get :http-max-body)}))))))
 
 (defn stop-server
   []

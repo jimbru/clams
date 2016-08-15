@@ -40,9 +40,9 @@
     (require routes-ns)
     (compile-routes app-ns (var-get (ns-resolve routes-ns 'routes)))))
 
-(defn app [app-ns app-middleware]
+(defn app [app-ns app-middleware post-mw]
   (let [handler (wrap-middleware (routes app-ns)
-                                 (concat default-middleware app-middleware))]
+                                 (concat post-mw default-middleware app-middleware))]
     (fn [request]
       (handler request))))
 
@@ -56,8 +56,9 @@
       (conf/load!)
       (log/debug "CLAMS_ENV =" (conf/get :clams-env))
       (let [middleware (:middleware opts)
+            post-mw    (:post-middleware opts)
             port       (str->int (conf/get :port))]
-        (reset! server (run-server (app app-ns middleware)
+        (reset! server (run-server (app app-ns middleware post-mw)
                                    {:port port
                                     :max-body (conf/get :http-max-body)}))))))
 

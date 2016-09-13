@@ -11,4 +11,4 @@
 
 (defn test-app
   [app-ns & app-middleware]
-  (clams.app/app app-ns app-middleware))
+  (clams.app/app app-ns app-middleware []))

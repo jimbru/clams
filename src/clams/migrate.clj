@@ -23,7 +23,7 @@
   - Also see  https://github.com/weavejester/ragtime/wiki/Getting-Started
   "
   (:require
-   [clams.conf :as conf]
+   [conf.core :as conf]
    [clams.util :refer [str->int]]
    [monger.core :as mg]
    monger.ragtime                       ; Force load of Mongo ragtime/Migratable code

@@ -1,5 +1,5 @@
 (ns clams.app
-  (:require [clams.conf :as conf]
+  (:require [conf.core :as conf]
             clams.middleware.save-params
             [clams.route :refer [compile-routes]]
             [clams.util :refer [str->int]]
@@ -52,15 +52,14 @@
   ([app-ns opts]
    (start-server app-ns opts httpkit/run-server))
   ([app-ns opts run-server]
-    (when (nil? @server)
-      (conf/load!)
-      (log/debug "CLAMS_ENV =" (conf/get :clams-env))
-      (let [middleware (:middleware opts)
-            post-mw    (:post-middleware opts)
-            port       (str->int (conf/get :port))]
-        (reset! server (run-server (app app-ns middleware post-mw)
-                                   {:port port
-                                    :max-body (conf/get :http-max-body)}))))))
+   (when (nil? @server)
+     (log/debug "CONF_ENV =" (conf/get :conf-env))
+     (let [middleware (:middleware opts)
+           post-mw    (:post-middleware opts)
+           port       (str->int (conf/get :port))]
+       (reset! server (run-server (app app-ns middleware post-mw)
+                                  {:port port
+                                   :max-body (conf/get :http-max-body)}))))))
 
 (defn stop-server
   []

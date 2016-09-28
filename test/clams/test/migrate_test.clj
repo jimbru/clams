@@ -29,7 +29,7 @@
 (deftest mongo-config-test
   (with-redefs [ragtime.jdbc/load-resources (constantly fake-migrations)
                 monger.core/connect-via-uri (constantly {:db "mongo handle"})
-                clams.conf/get (fn [k] (get fake-conf k))]
+                conf.core/get (fn [k] (get fake-conf k))]
     (is (= {:database "mongo handle" :migrations (take 2 fake-migrations)}
            (#'migrate/mongo-config)))
 

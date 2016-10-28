@@ -1,6 +1,6 @@
-(ns clams.test.route-test
-  (:require [clojure.test :refer :all]
-            [clams.route :refer :all]))
+(ns clams.route-test
+  (:require [clams.route :refer :all]
+            [clojure.test :refer :all]))
 
 (deftest controller-test
   (doseq [[app-ns route-key result]

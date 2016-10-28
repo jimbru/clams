@@ -1,7 +1,7 @@
-(ns clams.test.middleware.save-params-test
-  (:require [clojure.test :refer :all]
-            [clams.middleware.save-params :refer :all]))
-
+(ns clams.middleware.save-params-test
+  (:require [clams.middleware.save-params :refer :all]
+            [clojure.test :refer :all]))
+            
 (deftest save-params-request-test
   (let [params {:params {"algeria" 11
                          "Bulgaria" "Cambodia"

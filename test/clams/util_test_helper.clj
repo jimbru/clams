@@ -1,4 +1,4 @@
-(ns clams.test.util-test-helper)
+(ns clams.util-test-helper)
 
 (def v1 "thing")
 

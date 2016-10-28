@@ -1,14 +1,11 @@
-(ns clams.test.migrate-test
-  (:require
-   [clojure.test :refer :all]
-   [clams.migrate :as migrate]
-   [ragtime.jdbc :as jdbc]
-   ))
+(ns clams.migrate-test
+  (:require [clams.migrate :as migrate]
+            [clojure.test :refer :all]
+            [ragtime.jdbc :as jdbc]))
 
 (deftest read-empty-configs-test
   (is (nil? (#'migrate/sql-config)))
-  (is (nil? (#'migrate/mongo-config)))
-  )
+  (is (nil? (#'migrate/mongo-config))))
 
 (def fake-migrations
   [{:scheme :mongo
@@ -37,8 +34,7 @@
       (is (= nil
              (#'migrate/run-migrations (fn [c] (swap! state conj c)))))
       (is (= [{:database "mongo handle" :migrations (take 2 fake-migrations)}]
-             @state)))
-    ))
+             @state)))))
 
 (deftest load-files-test
   (let [migrations (jdbc/load-files ["/abc/migrate/001-foo.up.mongoclj"

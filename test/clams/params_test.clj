@@ -1,7 +1,7 @@
-(ns clams.test.params-test
-  (:require [clojure.test :refer :all]
-            [clams.params :as p]))
-
+(ns clams.params-test
+  (:require [clams.params :as p]
+            [clojure.test :refer :all]))
+            
 (defn bare-request
   [req]
   (inc (:foobar req)))

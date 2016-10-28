@@ -1,9 +1,8 @@
-(ns clams.test.app-test
-  (:require [clojure.test :refer :all]
-            [clams.app :as app]
+(ns clams.app-test
+  (:require [clams.app :as app]
+            [clojure.test :refer :all]
             [ring.mock.request :as mock]
-            [ring.util.io :refer [string-input-stream]]
-            ))
+            [ring.util.io :refer [string-input-stream]]))
 
 (def m1 #(* % 2))
 (def m2 #(+ % 7))

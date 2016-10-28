@@ -1,7 +1,7 @@
-(ns clams.test.util-test
-  (:require [clojure.test :refer :all]
-            [clams.util :refer :all]
-            clams.test.util-test-helper))
+(ns clams.util-test
+  (:require [clams.util :refer :all]
+            clams.util-test-helper
+            [clojure.test :refer :all]))
 
 (deftest fully-qualified-symbol-test
   (dorun
@@ -16,7 +16,7 @@
 ;; We'll make a note of this one so that we might inspect it later.
 (def this-ns *ns*)
 
-(redef clams.test.util-test-helper [v1 f1])
+(redef clams.util-test-helper [v1 f1])
 
 (deftest redef-test
   (let [publics     (ns-publics this-ns)
@@ -26,7 +26,7 @@
     (is (contains? publics 'f1))
     (is (= ((get-public 'f1)) "thing"))))
 
-(redefmacro clams.test.util-test-helper [m1])
+(redefmacro clams.util-test-helper [m1])
 
 (deftest redefmacro-test
   (let [publics (ns-publics this-ns)]

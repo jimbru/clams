@@ -1,6 +1,6 @@
-(ns clams.test.controller-test
-  (:require [clojure.test :refer :all]
-            [clams.controller :refer :all]
+(ns clams.controller-test
+  (:require [clams.controller :refer :all]
+            [clojure.test :refer :all]
             [clams.params :as p]))
 
 (defcontroller foobar

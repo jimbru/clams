@@ -20,7 +20,11 @@
 ;;
 ;; In case that in turn wasn't clear, it means that wrap-params happens first,
 ;; then the result of that is passed to wrap-nested-params.
-(defonce default-middleware
+(def default-middleware
+  "The default set of middleware applied if the :middleware option isn't
+   passed to start-server. Custom middleware can be applied in addition to
+   these defaults by concatenating them and passing the result using the
+   :middleware option."
   [ring.middleware.http-response/wrap-http-response
    ring.middleware.keyword-params/wrap-keyword-params
    clams.middleware.save-params/wrap-save-params
@@ -40,11 +44,9 @@
     (require routes-ns)
     (compile-routes app-ns (var-get (ns-resolve routes-ns 'routes)))))
 
-(defn app [app-ns app-middleware post-mw]
-  (let [handler (wrap-middleware (routes app-ns)
-                                 (concat post-mw default-middleware app-middleware))]
-    (fn [request]
-      (handler request))))
+(defn app [app-ns middleware]
+  (fn [request]
+    ((wrap-middleware (routes app-ns) middleware) request)))
 
 (defn start-server
   ([app-ns]
@@ -54,10 +56,9 @@
   ([app-ns opts run-server]
    (when (nil? @server)
      (log/debug "CONF_ENV =" (conf/get :conf-env))
-     (let [middleware (:middleware opts)
-           post-mw    (:post-middleware opts)
+     (let [middleware (or (:middleware opts) default-middleware)
            port       (str->int (conf/get :port))]
-       (reset! server (run-server (app app-ns middleware post-mw)
+       (reset! server (run-server (app app-ns middleware)
                                   {:port port
                                    :max-body (conf/get :http-max-body)}))))))
 

@@ -1,5 +1,7 @@
 (ns clams.util)
 
+(def p partial)
+
 (defn fully-qualified-symbol
   "Builds a fully-qualified symbol from a namespace and an unqualified name."
   [ns name]

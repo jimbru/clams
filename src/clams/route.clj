@@ -1,8 +1,8 @@
 (ns clams.route
   (:require [clojure.string :as string]
             [clams.params :as params]
-            [clams.util :refer [redefmacro]]
-            clout.core
+            [clams.util :refer [p redefmacro]]
+            [clout.core :as clout]
             compojure.core
             compojure.route))
 
@@ -67,7 +67,42 @@
   []
   [(compojure.route/not-found "404 Not Found")])
 
-(defn compile-routes
+(defn compile-routes-LEGACY
   [app-ns routes]
   (apply compojure.core/routes
          (concat (make-app-routes app-ns routes) (make-default-routes))))
+
+;;;;
+;; ng
+;;
+
+(defn- resolve-controllers
+  "updates route map, resolving controllers from keys"
+  [app-ns routes]
+  (map #(update % 2 (p resolve-controller app-ns)) routes))
+
+(defn- compile-routes
+  "NB: controllers must be resolved"
+  [routes]
+  (reduce
+   (fn [acc [method pathspec ctrl]]
+     (update-in acc
+                [pathspec method]
+                (fn [dup]
+                  (assert (nil? dup)
+                          (format "Route map contains duplicate route: %s %s"
+                                  method
+                                  pathspec))
+                  ctrl)))
+   {}
+   routes))
+
+(defn handler
+  "todo"
+  [app-ns routes]
+  (->> (resolve-controllers app-ns routes)
+       (compile-routes)))
+
+
+
+
